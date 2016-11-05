@@ -9,9 +9,18 @@
 		protected $configFile = 'config.json';
 		protected $config = '';
 		protected $configMap = [
-			'api_key' => 'apiKey',
-			'pass' => 'pass',
-			'shop_name' => 'shopName',
+			'api_key' => [
+				'prop' => 'apiKey',
+				'env' => 'SHOPIFY_API_KEY'
+			],
+			'pass' => [
+				'prop' => 'pass',
+				'env' => 'SHOPIFY_PASS'
+			],
+			'shop_name' => [
+				'prop' => 'shopName',
+				'env' => 'SHOPIFY_SHOP_NAME'
+			],
 		];
 
 		protected $apiKey;
@@ -45,16 +54,28 @@
 
 			$this->config = json_decode($contents);
 
-			foreach ($this->configMap as $key => $prop) {
+			foreach ($this->configMap as $key => $value) {
 				if (!array_key_exists($key, $this->config)) {
 					throw new Exception('Missing key: ' . $key);
 				}
 
 				if (empty($this->config->{$key})) {
-					throw new Exception('Missing value: ' . $key);
+					/*
+						If the config isn't found we'll check if an environment
+						variable exists, this is largely Heroku specific, and offers
+						us a nice way to avoid deploying any config.
+
+						If time were no issue this handling would be more loosely
+						coupled to this class.
+					*/
+					$env_value = getenv($value['env']);
+
+					if (empty($env_value) && empty($this->config->{$env_value})) {
+						throw new Exception('Missing value: ' . $key);
+					}
 				}
 
-				$this->{$prop} = $this->config->{$key};
+				$this->{$value['prop']} = !empty($env_value) ? $this->config->{$env_value} : $this->config->{$key};
 			}
 
 			return $this;
