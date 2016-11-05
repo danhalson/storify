@@ -55,7 +55,7 @@
 			$this->config = json_decode($contents);
 
 			foreach ($this->configMap as $key => $value) {
-				if (!array_key_exists($key, $this->config)) {
+				if ($handle && !array_key_exists($key, $this->config)) {
 					throw new Exception('Missing key: ' . $key);
 				}
 
