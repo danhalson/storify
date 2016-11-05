@@ -1,0 +1,20 @@
+{
+    "name": "dan/storify",
+    "description": "A simple shopify API implementation test",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Dan Halson",
+            "email": "dan.halson@googlemail.com"
+        }
+    ],
+    "require": {
+   		"twbs/bootstrap": "^3.3"
+    },
+		"scripts": {
+			"post-update-cmd": [
+				"cp vendor/twbs/bootstrap/dist/css/bootstrap.min.css css/bootstrap.min.css",
+				"cp vendor/twbs/bootstrap/dist/js/bootstrap.min.js js/bootstrap.min.js"
+			]
+		}
+}

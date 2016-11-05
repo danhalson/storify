@@ -1,0 +1,26 @@
+.container-fluid {
+	margin: 0 auto;
+  width: 80%;
+	padding-bottom: 1em;
+}
+
+.alert {
+	margin-bottom: 0.5em;
+}
+
+label:not(:first-child), .drop_area {
+	margin-top: 1em;
+}
+
+label.required:after {
+  content:" *";
+  color:red;
+}
+
+.drop_area {
+	text-align: center;
+}
+
+.drop_area.is-dragover {
+	opacity: 0.5;
+}
