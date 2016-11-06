@@ -70,12 +70,12 @@
 					*/
 					$env_value = getenv($value['env']);
 
-					if (empty($env_value) && empty($this->config->{$env_value})) {
+					if (empty($env_value)) {
 						throw new Exception('Missing value: ' . $key);
 					}
 				}
 
-				$this->{$value['prop']} = !empty($env_value) ? $this->config->{$env_value} : $this->config->{$key};
+				$this->{$value['prop']} = !empty($env_value) ? $env_value : $this->config->{$key};
 			}
 
 			return $this;
