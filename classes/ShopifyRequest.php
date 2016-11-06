@@ -35,10 +35,14 @@
 
 		/**
 		 * Build the base url on instantiation.
+		 *
+		 * @return ShopifyRequest $this
 		 */
 		public function __construct() {
 			$this->getConfig();
 			$this->buildShopUrl();
+
+			return $this;
 		}
 
 		/**
